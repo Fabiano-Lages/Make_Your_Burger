@@ -1,30 +1,46 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <NavBar :logo="logo_src" :alt="app_name" />
   <router-view/>
+  <FooterPage />
 </template>
 
+<script>
+  import NavBar from './components/NavBar.vue'
+  import FooterPage from './components/FooterPage.vue'
+  export default {
+    name: 'App',
+    components: {
+      NavBar, 
+      FooterPage
+    },
+    data() {
+      return {
+        logo_src: "/img/logo.png",
+        app_name: "Make Your Burger"
+      }
+    }
+  }
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  * {
+    font-family: Helvetica;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
 
-nav {
-  padding: 30px;
-}
+  .main-container {
+    margin: 50px;
+    min-height: 250px;
+  }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  h1 {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 30px;
+    color: #222;
+  }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  
 </style>
