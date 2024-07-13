@@ -10,8 +10,7 @@
 </script>
 <style scoped>
     footer {
-        position: absolute;
-        height: 200px;
+        height: 250px;
         background-color: #222;
         border-top: 4px solid #111;
         color: #FCBA03;
@@ -19,6 +18,5 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        bottom: 0;
     }
 </style>

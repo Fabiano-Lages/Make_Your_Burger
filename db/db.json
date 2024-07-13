@@ -1,81 +1,149 @@
 {
-    "ingredientes": {
-      "paes": [
-        {
-          "id": 1,
-          "tipo": "Italiano Branco"
-        },
-        {
-          "id": 2,
-          "tipo": "3 Queijos"
-        },
-        {
-          "id": 3,
-          "tipo": "Parmesão e Orégano"
-        },
-        {
-          "id": 4,
-          "tipo": "Integral"
-        }
-      ],
-      "carnes": [
-        {
-          "id": 1,
-          "tipo": "Maminha"
-        },
-        {
-          "id": 2,
-          "tipo": "Alcatra"
-        },
-        {
-          "id": 3,
-          "tipo": "Picanha"
-        },
-        {
-          "id": 4,
-          "tipo": "Veggie burger"
-        }
-      ],
-      "opcionais": [
-        {
-          "id": 1,
-          "tipo": "Bacon"
-        },
-        {
-          "id": 2,
-          "tipo": "Cheddar"
-        },
-        {
-          "id": 3,
-          "tipo": "Salame"
-        },
-        {
-          "id": 4,
-          "tipo": "Tomate"
-        },
-        {
-          "id": 4,
-          "tipo": "Cebola roxa"
-        },
-        {
-          "id": 4,
-          "tipo": "Pepino"
-        }
-      ]
-    },
-    "status": [
+  "ingredientes": {
+    "paes": [
       {
         "id": 1,
-        "tipo": "Solicitado"
+        "tipo": "Italiano Branco"
       },
       {
         "id": 2,
-        "tipo": "Em produção"
+        "tipo": "3 Queijos"
       },
       {
         "id": 3,
-        "tipo": "Finalizado"
+        "tipo": "Parmesão e Orégano"
+      },
+      {
+        "id": 4,
+        "tipo": "Integral"
       }
     ],
-    "burgers": []
-  }
+    "carnes": [
+      {
+        "id": 1,
+        "tipo": "Maminha"
+      },
+      {
+        "id": 2,
+        "tipo": "Alcatra"
+      },
+      {
+        "id": 3,
+        "tipo": "Picanha"
+      },
+      {
+        "id": 4,
+        "tipo": "Veggie burger"
+      }
+    ],
+    "opcionais": [
+      {
+        "id": 1,
+        "tipo": "Bacon"
+      },
+      {
+        "id": 2,
+        "tipo": "Cheddar"
+      },
+      {
+        "id": 3,
+        "tipo": "Salame"
+      },
+      {
+        "id": 4,
+        "tipo": "Tomate"
+      },
+      {
+        "id": 5,
+        "tipo": "Cebola roxa"
+      },
+      {
+        "id": 6,
+        "tipo": "Pepino"
+      }
+    ]
+  },
+  "status": [
+    {
+      "id": "1",
+      "tipo": "Solicitado"
+    },
+    {
+      "id": "2",
+      "tipo": "Em produção"
+    },
+    {
+      "id": "3",
+      "tipo": "Finalizado"
+    }
+  ],
+  "burgers": [
+    {
+      "id": "003b",
+      "nome": "FABIANO",
+      "pao": 2,
+      "carne": 1,
+      "opcionais": [
+        1,
+        4,
+        5
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "6f6a",
+      "nome": "Fabiano Teixeira Lages",
+      "pao": 3,
+      "carne": 3,
+      "opcionais": [
+        1,
+        3,
+        5,
+        6,
+        4,
+        2
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "3c1a",
+      "nome": "FABIANO",
+      "pao": 1,
+      "carne": 2,
+      "opcionais": [],
+      "status": "Solicitado"
+    },
+    {
+      "id": "eb35",
+      "nome": "Gisele",
+      "pao": 2,
+      "carne": 2,
+      "opcionais": [
+        1,
+        4,
+        2
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "e63f",
+      "nome": "Fabiano Teixeira Lages",
+      "pao": 4,
+      "carne": 4,
+      "opcionais": [
+        1,
+        3,
+        5
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "b209",
+      "nome": "FABIANO",
+      "pao": 1,
+      "carne": 3,
+      "opcionais": [],
+      "status": "Solicitado"
+    }
+  ]
+}
