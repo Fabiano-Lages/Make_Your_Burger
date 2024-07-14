@@ -79,39 +79,19 @@
   ],
   "burgers": [
     {
-      "id": "003b",
-      "nome": "FABIANO",
-      "pao": 2,
-      "carne": 1,
-      "opcionais": [
-        1,
-        4,
-        5
-      ],
-      "status": "Solicitado"
-    },
-    {
       "id": "6f6a",
       "nome": "Fabiano Teixeira Lages",
-      "pao": 3,
-      "carne": 3,
-      "opcionais": [
-        1,
-        3,
-        5,
-        6,
-        4,
-        2
-      ],
-      "status": "Solicitado"
-    },
-    {
-      "id": "3c1a",
-      "nome": "FABIANO",
       "pao": 1,
       "carne": 2,
-      "opcionais": [],
-      "status": "Solicitado"
+      "opcionais": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        5
+      ],
+      "status": 3
     },
     {
       "id": "eb35",
@@ -123,27 +103,7 @@
         4,
         2
       ],
-      "status": "Solicitado"
-    },
-    {
-      "id": "e63f",
-      "nome": "Fabiano Teixeira Lages",
-      "pao": 4,
-      "carne": 4,
-      "opcionais": [
-        1,
-        3,
-        5
-      ],
-      "status": "Solicitado"
-    },
-    {
-      "id": "b209",
-      "nome": "FABIANO",
-      "pao": 1,
-      "carne": 3,
-      "opcionais": [],
-      "status": "Solicitado"
+      "status": 2
     }
   ]
 }

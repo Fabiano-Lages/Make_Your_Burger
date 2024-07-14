@@ -1,4 +1,5 @@
 <template>
+    <MessageComp :msg="msg" v-show="msg" />
     <div id="burger-table">
         <div>
             <div id="burger-table-heading">
@@ -11,7 +12,7 @@
             </div>
         </div>
         <div id="burger-table-rows">
-            <div class="burger-table-row" v-for="pedido in pedidos" :key="pedido.id">
+            <div class="burger-table-row" v-for="pedido in listaPedidos" :key="pedido.id">
                 <div class="order-number">{{ pedido.id }}</div>
                 <div>{{ pedido.nome }}</div>
                 <div>{{ pedido.pao }}</div>
@@ -21,13 +22,12 @@
                         <li v-for="(opcional, ind) in pedido.opcionais" :key="ind">{{ opcional }}</li>
                     </ul>
                 </div>
-                <div>
-                    <select name="status" class="status">
+                <div class="order-actions">
+                    <select name="status" :id="'drop-' + pedido.id" class="status" :value="pedido.status" @change="atualizaPedido(pedido.id, $event)">
                         <option value="">Selecione</option>
-                        <option>Preparando</option>
-                        <option>Pronto</option>
+                        <option v-for="st in listaStatus" :key="st.id" :value="st.id">{{ st.tipo }}</option>
                     </select>
-                    <button class="delete-btn">Cancelar</button>
+                    <button class="delete-btn" @click="cancelaPedido(pedido.id)">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -35,33 +35,51 @@
 </template>
 
 <script>
+    import MessageComp from './MessageComp.vue';
     export default {
         name: "DashBoard",
         props: {
             
         },
+        components: {
+            MessageComp
+        },
         data(){
             return({
-                pedidos: null,
+                listaPedidos: null,
+                listaStatus: null,
                 burger_id: null,
                 ingredientes: [],
-                status: []
+                status: [],
+                msg: null
             });
         },
         methods: {
-            async getPedidos() {
+            carregaListas() {
+                Promise.all([
+                    this.pegarPedidos(),
+                    this.pegarOpcionais(),
+                    this.pegarStastus()
+                ]).then(() => {
+                    this.recuperaNomeIngredientes();
+                });
+            },
+            async pegarPedidos() {
                 const req = await fetch("http://localhost:3000/burgers");
                 const data = await req.json();
-                this.pedidos = data;
+                this.listaPedidos = data;
             },
-            async getOpcionais() {
+            async pegarOpcionais() {
                 const req = await fetch("http://localhost:3000/ingredientes");
                 const data = await req.json();
                 this.ingredientes = data;
-                this.recuperaNomeIngredientes();
+            },
+            async pegarStastus() {
+                const req = await fetch('http://localhost:3000/status');
+                this.listaStatus = await req.json();
             },
             recuperaNomeIngredientes() {
-                this.pedidos.forEach(pedido => {
+                this.listaPedidos.forEach(pedido => {
                     pedido.pao = this.ingredientes.paes.find(pao => pao.id == pedido.pao).tipo;
                     pedido.carne = this.ingredientes.carnes.find(carne => carne.id == pedido.carne).tipo;
                     let aux;
@@ -72,11 +90,38 @@
                         }
                     }
                 });
+            },
+            async atualizaPedido(id, e) {
+                const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: Number(e.target.value) })
+                });
+
+                const res = await req.json();
+            },
+            async cancelaPedido(id) {
+                const data = this.buscaPedido(id);
+                if(data && confirm("Deseja realmente cancelar este pedido?")) {
+                    const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                        method: "DELETE",
+                    });
+
+                    const res = await req.json();
+                    this.listaPedidos.splice(this.listaPedidos.indexOf(data), 1); 
+                    this.mensagem(`O pedido No. ${id} foi cancelado com sucesso!`);
+                }
+            },
+            buscaPedido(id) {
+                return(this.listaPedidos.find(p => p.id == id));
+            },
+            mensagem(msg) {
+                this.msg = msg;
+                setTimeout(() => this.msg = "", 3000);
             }
         },
         mounted() {
-            this.getPedidos();
-            this.getOpcionais();
+            this.carregaListas();
         }
     }
 </script>
@@ -119,9 +164,13 @@
         width: 5%;
     }
 
+    .order-actions {
+        align-content: center;    
+    }
+
     select {
         padding: 12px 6px;
-        margin-right: 12px;
+        margin-right: 5px;
     }
 
     .delete-btn {

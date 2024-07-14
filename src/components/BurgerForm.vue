@@ -23,7 +23,7 @@
                 </div>
                 <div id="opcionais-container" class="input-container">
                     <span id="opcionais-title">Selecione os opcionais:</span>
-                    <div v-for="opcional in opcionaisdata" :key="opcional.id" class="checkbox-container">
+                    <div v-for="opcional in listaOpcionais" :key="opcional.id" class="checkbox-container">
                         <input type="checkbox" :id="opcional.id" name="opcional" :value="opcional.id" v-model="opcionais" />
                         <label class="checkbox-label" :for="opcional.id">{{ opcional.tipo }}</label>
                     </div>
@@ -43,12 +43,12 @@
             return({
                 paes: null,
                 carnes: null,
-                opcionaisdata: null,
+                listaOpcionais: null,
                 nome: null,
                 pao: null,
                 carne: null,
                 opcionais: [],
-                status: "Solicitado",
+                status: null,
                 msg: null,
                 erro: false
             });
@@ -57,18 +57,35 @@
             async pegarIngredientes() {
                 const req = await fetch('http://localhost:3000/ingredientes');
                 const data = await req.json();
+
                 this.paes = data.paes;
                 this.carnes = data.carnes;
-                this.opcionaisdata = data.opcionais;
+                this.listaOpcionais = data.opcionais;
+            },
+            async pegarStatus() {
+                const req = await fetch('http://localhost:3000/status');
+                const data = await req.json();
+                this.status = data.find(st => st.tipo == "Solicitado").id;
+            },
+            capitaliza(nome) {
+                if(nome) {
+                    nome = nome.replaceAll("  ", " ");
+                    let partes = nome.aplit(" ");
+                    for(let i = 0; i < partes.length; i++) {
+                        partes[i] = partes[i][0].toUpperCase() + partes[i].substr(1).toLowerCase();
+                    }
+                    nome = partes.join(" ");
+                }
+                return(nome);
             },
             async createBurger(e) {
                 e.preventDefault();
                 const data = {
-                    nome: this.nome,
+                    nome: capitaliza(this.nome),
                     pao: this.pao,
                     carne: this.carne,
                     opcionais: Array.from(this.opcionais),
-                    status: "Solicitado"
+                    status: this.status
                 };
 
                 if(data.nome && data.pao && data.carne) {
@@ -113,6 +130,7 @@
         },
         mounted() {
             this.pegarIngredientes();
+            this.pegarStatus();
         }
     }
 </script>
