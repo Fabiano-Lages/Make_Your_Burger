@@ -99,6 +99,7 @@
                 });
 
                 const res = await req.json();
+                this.mensagem(`O pedido No. ${id} passou para ${this.listaStatus.find(st => st.id == e.target.value).tipo}!`);
             },
             async cancelaPedido(id) {
                 const data = this.buscaPedido(id);
