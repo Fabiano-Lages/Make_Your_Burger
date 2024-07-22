@@ -81,7 +81,7 @@
             async createBurger(e) {
                 e.preventDefault();
                 const data = {
-                    nome: capitaliza(this.nome),
+                    nome: this.capitaliza(this.nome),
                     pao: this.pao,
                     carne: this.carne,
                     opcionais: Array.from(this.opcionais),

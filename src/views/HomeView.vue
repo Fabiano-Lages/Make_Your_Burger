@@ -1,5 +1,5 @@
 <template>
-  <Banner />
+  <MainBanner />
   <div class="main-container">
     <h1>Monte seu burger:</h1>
     <BurgerForm />
@@ -8,12 +8,12 @@
 
 <script>
 // @ is an alias to /src
-import Banner from '../components/BannerBurger.vue';
+import MainBanner from '../components/BannerBurger.vue';
 import BurgerForm from '../components/BurgerForm.vue';
 export default {
   name: 'HomeView',
   components: {
-    Banner,
+    MainBanner,
     BurgerForm
   } 
 }

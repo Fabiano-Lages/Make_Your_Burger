@@ -65,41 +65,45 @@
   },
   "status": [
     {
-      "id": 1,
+      "id": "1",
       "tipo": "Solicitado"
     },
     {
-      "id": 2,
+      "id": "2",
       "tipo": "Em produção"
     },
     {
-      "id": 3,
+      "id": "3",
       "tipo": "Finalizado"
     }
   ],
   "burgers": [
     {
-      "nome": "Fabiano",
+      "id": "6f6a",
+      "nome": "Fabiano Teixeira Lages",
       "pao": 1,
       "carne": 2,
       "opcionais": [
         1,
         2,
-        3
+        3,
+        4,
+        6,
+        5
       ],
-      "status": 1,
-      "id": 1
+      "status": 2
     },
     {
+      "id": "eb35",
       "nome": "Gisele",
       "pao": 2,
-      "carne": 1,
+      "carne": 2,
       "opcionais": [
-        2,
-        3
+        1,
+        4,
+        2
       ],
-      "status": 2,
-      "id": 2
+      "status": 1
     }
   ]
 }

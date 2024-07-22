@@ -1,5 +1,5 @@
 <template>
-    <div :class="class">
+    <div :class="classe">
         <p >{{ msg }}</p>
     </div>
 </template>
@@ -13,11 +13,11 @@
         },
         data() {
             return({
-                class: "message-container"
+                classe: "message-container"
             })
         },
         beforeUpdate() {
-            this.class = "message-container" + (this.erro ? " error" : "");
+            this.classe = "message-container" + (this.erro ? " error" : "");
         }
     }
 </script>
