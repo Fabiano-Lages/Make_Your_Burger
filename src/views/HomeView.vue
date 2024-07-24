@@ -7,14 +7,13 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import MainBanner from '../components/BannerBurger.vue';
-import BurgerForm from '../components/BurgerForm.vue';
-export default {
-  name: 'HomeView',
-  components: {
-    MainBanner,
-    BurgerForm
-  } 
-}
+  import MainBanner from '@/components/BannerBurger.vue';
+  import BurgerForm from '@/components/BurgerForm.vue';
+  export default {
+    name: 'HomeView',
+    components: {
+      MainBanner,
+      BurgerForm
+    } 
+  }
 </script>
