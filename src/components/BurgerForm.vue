@@ -39,6 +39,15 @@
     import MessageComp from "./MessageComp.vue";
     export default {
         name: 'BurgerForm',
+        props: {
+            url: String,
+            porta: Number
+        },
+        computed: {
+            Url() {
+                return(this.url + ':' + this.porta);
+            }
+        },
         data() {
             return({
                 paes: null,
@@ -55,22 +64,22 @@
         },
         methods: {
             async pegarIngredientes() {
-                const req = await fetch('http://localhost:3000/ingredientes');
+                const req = await fetch(`${this.Url}/ingredientes`);
                 const data = await req.json();
-
                 this.paes = data.paes;
                 this.carnes = data.carnes;
                 this.listaOpcionais = data.opcionais;
             },
             async pegarStatus() {
-                const req = await fetch('http://localhost:3000/status');
+                const req = await fetch(`${this.Url}/status`);
                 const data = await req.json();
+
                 this.status = data.find(st => st.tipo == "Solicitado").id;
             },
             capitaliza(nome) {
                 if(nome) {
                     nome = nome.replaceAll("  ", " ");
-                    let partes = nome.aplit(" ");
+                    let partes = nome.split(" ");
                     for(let i = 0; i < partes.length; i++) {
                         partes[i] = partes[i][0].toUpperCase() + partes[i].substr(1).toLowerCase();
                     }
@@ -90,7 +99,7 @@
 
                 if(data.nome && data.pao && data.carne) {
                     const dataJson = JSON.stringify(data);
-                    const req = await fetch("http://localhost:3000/burgers", {
+                    const req = await fetch(`${this.Url}/pedido`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: dataJson

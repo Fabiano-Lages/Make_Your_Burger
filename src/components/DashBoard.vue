@@ -39,7 +39,13 @@
     export default {
         name: "DashBoard",
         props: {
-            
+            url: String,
+            porta: Number
+        },
+        computed: {
+            Url() {
+                return(this.url + ':' + this.porta);
+            }
         },
         components: {
             MessageComp
@@ -49,7 +55,7 @@
                 listaPedidos: null,
                 listaStatus: null,
                 burger_id: null,
-                ingredientes: [],
+                ingredientes: null,
                 status: [],
                 msg: null
             });
@@ -65,17 +71,17 @@
                 });
             },
             async pegarPedidos() {
-                const req = await fetch("http://localhost:3000/burgers");
+                const req = await fetch(`${this.Url}/pedido`);
                 const data = await req.json();
                 this.listaPedidos = data;
             },
             async pegarOpcionais() {
-                const req = await fetch("http://localhost:3000/ingredientes");
+                const req = await fetch(`${this.Url}/ingredientes`);
                 const data = await req.json();
                 this.ingredientes = data;
             },
             async pegarStastus() {
-                const req = await fetch('http://localhost:3000/status');
+                const req = await fetch(`${this.Url}/status`);
                 this.listaStatus = await req.json();
             },
             recuperaNomeIngredientes() {
@@ -92,19 +98,20 @@
                 });
             },
             async atualizaPedido(id, e) {
-                const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                const req = await fetch(`${this.Url}/pedido/${id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ status: Number(e.target.value) })
                 });
 
                 const res = await req.json();
+                this.listaPedidos.find(p => p.id == id).status = e.target.value;
                 this.mensagem(`O pedido No. ${id} passou para ${this.listaStatus.find(st => st.id == e.target.value).tipo}!`);
             },
             async cancelaPedido(id) {
                 const data = this.buscaPedido(id);
                 if(data && confirm("Deseja realmente cancelar este pedido?")) {
-                    const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                    const req = await fetch(`${this.Url}/pedido/${id}`, {
                         method: "DELETE",
                     });
 

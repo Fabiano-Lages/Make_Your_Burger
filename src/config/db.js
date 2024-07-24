@@ -1,7 +1,6 @@
 
 const mongoose = require("mongoose");
-
-const _Banco = `mongodb://172.23.29.67:27017/MakeBurger?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.10`;
+const _Banco = process.env.VUE_APP_API_CONEXAO;
 
 mongoose.Promise = global.Promise;
 
