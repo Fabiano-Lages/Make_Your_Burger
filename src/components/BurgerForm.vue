@@ -37,12 +37,17 @@
 </template>
 <script>
     import MessageComp from "./MessageComp.vue";
+    import fetchMixin from '../mixins/fetchMixin';
+
     export default {
         name: 'BurgerForm',
         props: {
             url: String,
             porta: Number
         },
+        mixins: [
+        fetchMixin
+        ],
         computed: {
             Url() {
                 return(this.url + ':' + this.porta);
@@ -64,17 +69,13 @@
         },
         methods: {
             async pegarIngredientes() {
-                const req = await fetch(`${this.Url}/ingredientes`);
-                const data = await req.json();
+                const data =this.fetchNoToken(`${this.Url}/ingredientes`);
                 this.paes = data.paes;
                 this.carnes = data.carnes;
                 this.listaOpcionais = data.opcionais;
             },
             async pegarStatus() {
-                const req = await fetch(`${this.Url}/status`);
-                const data = await req.json();
-
-                this.status = data.find(st => st.tipo == "Solicitado").id;
+                this.status = this.fetchNoToken(`${this.Url}/status`);
             },
             capitaliza(nome) {
                 if(nome) {

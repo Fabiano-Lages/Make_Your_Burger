@@ -4,13 +4,14 @@
             <img :src="logo" :alt="alt" id="logo">
         </router-link>
         <router-link to="/">Home</router-link>
-        <router-link to="/pedidos">Pedidos</router-link>
+        <router-link v-if="isauth" to="/pedidos">Pedidos</router-link>
+        <a href="#" v-if="!isauth" title="">Login</a>
     </div>
 </template>
 <script>
     export default {
         name: 'NavBar',
-        props:["logo", "alt"]
+        props:["logo", "alt", "isauth"]
     }
 </script>
 <style scoped>

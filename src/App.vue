@@ -1,5 +1,5 @@
 <template>
-  <NavBar :logo="logo_src" :alt="app_name" />
+  <NavBar :logo="logo_src" :alt="app_name" :isauth="autenticado" />
   <router-view/>
   <FooterPage />
 </template>
@@ -16,7 +16,8 @@
     data() {
       return {
         logo_src: "/img/logo.png",
-        app_name: "Make Your Burger"
+        app_name: "Make Your Burger",
+        autenticado: !!sessionStorage.getItem('token')
       }
     }
   }
