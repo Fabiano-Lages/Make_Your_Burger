@@ -46,7 +46,7 @@
             porta: Number
         },
         mixins: [
-        fetchMixin
+            fetchMixin
         ],
         computed: {
             Url() {
@@ -69,13 +69,17 @@
         },
         methods: {
             async pegarIngredientes() {
-                const data =this.fetchNoToken(`${this.Url}/ingredientes`);
+                const data = await this.fetchNoToken(`${this.Url}/ingredientes`);
                 this.paes = data.paes;
                 this.carnes = data.carnes;
                 this.listaOpcionais = data.opcionais;
+                this.listaOpcionais.sort((a,b) => a.tipo.localeCompare(b.tipo));
             },
             async pegarStatus() {
-                this.status = this.fetchNoToken(`${this.Url}/status`);
+                const lst = await this.fetchNoToken(`${this.Url}/status`);
+                if(lst) {
+                    this.status = lst.find(item => item.tipo == "Solicitado").id;
+                }
             },
             capitaliza(nome) {
                 if(nome) {
@@ -100,13 +104,12 @@
 
                 if(data.nome && data.pao && data.carne) {
                     const dataJson = JSON.stringify(data);
-                    const req = await fetch(`${this.Url}/pedido`, {
+                    const res = await this.fetchNoToken(`${this.Url}/pedido`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: dataJson
                     });
 
-                    const res = await req.json();
                     this.msg = `Hey ${res.nome}! Seu burger foi ${res.status.toLowerCase()}! Pedido No. ${res.id}`;
 
                     this.nome = "";

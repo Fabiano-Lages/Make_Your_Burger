@@ -5,7 +5,7 @@
         </router-link>
         <router-link to="/">Home</router-link>
         <router-link v-if="isauth" to="/pedidos">Pedidos</router-link>
-        <a href="#" v-if="!isauth" title="">Login</a>
+        <a href="#" v-if="!isauth" title="" @click="$emit('abreForm')">Login</a>
     </div>
 </template>
 <script>

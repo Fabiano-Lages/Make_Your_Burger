@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 
 const url = process.env.VUE_APP_API_URL;
 const porta = Number(process.env.VUE_APP_API_PORTA);
-const loggedIn = !!sessionStorage.getItem('token');
 
 const routes = [
   {
@@ -29,11 +28,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requireAuth) && !loggedIn) {
+  if(to.matched.some(record => record.meta.requireAuth) && !sessionStorage.getItem('token')) {
     next("/");
   } else {
     next();
   }
 });
 
-export default router;
+export default { router, url, porta };

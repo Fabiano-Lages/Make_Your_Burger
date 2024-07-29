@@ -36,12 +36,17 @@
 
 <script>
     import MessageComp from './MessageComp.vue';
+    import fetchMixin from '../mixins/fetchMixin';
+
     export default {
         name: "DashBoard",
         props: {
             url: String,
             porta: Number
         },
+        mixins: [
+            fetchMixin
+        ],
         computed: {
             Url() {
                 return(this.url + ':' + this.porta);
@@ -67,55 +72,63 @@
                     this.pegarOpcionais(),
                     this.pegarStastus()
                 ]).then(() => {
-                    this.recuperaNomeIngredientes();
-                });
-            },
-            async pegarPedidos() {
-                const req = await fetch(`${this.Url}/pedido`);
-                const data = await req.json();
-                this.listaPedidos = data;
-            },
-            async pegarOpcionais() {
-                const req = await fetch(`${this.Url}/ingredientes`);
-                const data = await req.json();
-                this.ingredientes = data;
-            },
-            async pegarStastus() {
-                const req = await fetch(`${this.Url}/status`);
-                this.listaStatus = await req.json();
-            },
-            recuperaNomeIngredientes() {
-                this.listaPedidos.forEach(pedido => {
-                    pedido.pao = this.ingredientes.paes.find(pao => pao.id == pedido.pao).tipo;
-                    pedido.carne = this.ingredientes.carnes.find(carne => carne.id == pedido.carne).tipo;
-                    let aux;
-                    for(let o = 0; o < pedido.opcionais.length; o++) {
-                        aux = this.ingredientes.opcionais.find(op => op.id == pedido.opcionais[o]);
-                        if(aux) {
-                            pedido.opcionais[o] = aux.tipo;;
-                        }
+                    if(this.listaPedidos.Erro || this.ingredientes.Erro || this.status.Erro) {
+                        this.$emit("desautorizaUsuario");
+                    } else {
+                        this.recuperaNomeIngredientes();
                     }
                 });
             },
+            async pegarPedidos() {
+                this.listaPedidos = await this.fetchWithToken(`${this.Url}/pedido`);
+                if(this.listaPedidos.Erro) {
+                    console.log(this.listaPedidos.Erro);
+                }
+            },
+            async pegarOpcionais() {
+                this.ingredientes = await this.fetchWithToken(`${this.Url}/ingredientes`);
+                if(this.ingredientes.Erro) {
+                    console.log(this.listaPedidos.Erro);
+                }
+            },
+            async pegarStastus() {
+                this.listaStatus = await this.fetchWithToken(`${this.Url}/status`);
+                if(this.listaStatus.Erro) {
+                    console.log(this.listaPedidos.Erro);
+                }
+            },
+            recuperaNomeIngredientes() {
+                if(this.listaPedidos) {
+                    this.listaPedidos.forEach(pedido => {
+                        pedido.pao = this.ingredientes.paes.find(pao => pao.id == pedido.pao).tipo;
+                        pedido.carne = this.ingredientes.carnes.find(carne => carne.id == pedido.carne).tipo;
+                        let aux;
+                        for(let o = 0; o < pedido.opcionais.length; o++) {
+                            aux = this.ingredientes.opcionais.find(op => op.id == pedido.opcionais[o]);
+                            if(aux) {
+                                pedido.opcionais[o] = aux.tipo;;
+                            }
+                        }
+                    });
+                }
+            },
             async atualizaPedido(id, e) {
-                const req = await fetch(`${this.Url}/pedido/${id}`, {
+                const res = await this.fetchWithToken(`${this.Url}/pedido/${id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ status: Number(e.target.value) })
                 });
 
-                const res = await req.json();
                 this.listaPedidos.find(p => p.id == id).status = e.target.value;
                 this.mensagem(`O pedido No. ${id} passou para ${this.listaStatus.find(st => st.id == e.target.value).tipo}!`);
             },
             async cancelaPedido(id) {
                 const data = this.buscaPedido(id);
                 if(data && confirm("Deseja realmente cancelar este pedido?")) {
-                    const req = await fetch(`${this.Url}/pedido/${id}`, {
+                    const res = await this.fetchWithToken(`${this.Url}/pedido/${id}`, {
                         method: "DELETE",
                     });
 
-                    const res = await req.json();
                     this.listaPedidos.splice(this.listaPedidos.indexOf(data), 1); 
                     this.mensagem(`O pedido No. ${id} foi cancelado com sucesso!`);
                 }
