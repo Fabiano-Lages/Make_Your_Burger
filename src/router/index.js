@@ -9,13 +9,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomeView,
-    props: {url, porta}
   },
   {
     path: '/pedidos',
     name: 'Pedidos',
     component: () => import('../views/PedidosView.vue'),
-    props: {url, porta},
     meta: {
       requireAuth: true
     }

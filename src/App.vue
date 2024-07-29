@@ -1,6 +1,6 @@
 <template>
   <NavBar :logo="logo_src" :alt="app_name" :isauth="autenticado" @abreForm="alteraForm" />
-  <router-view />
+  <router-view  @desautorizaUsuario="desautorizaUsuario" :url="url" :porta="porta" />
   <LoginForm v-if="!autenticado" :ativo="loginAtivo" @fechaForm="alteraForm" @autentica="autenticaUsuario" :url="url" :porta="porta" />
   <FooterPage />
 </template>
@@ -38,13 +38,12 @@
         if(this.autenticado) {
           sessionStorage.setItem("token", codigo);
         } else {
-          sessionStorage.removeItem("token", codigo);
+          sessionStorage.removeItem("token");
         }
       },
       desautorizaUsuario() {
         sessionStorage.removeItem("token");
         this.autenticado = false;
-        // Usar o router
       }
     }
   }

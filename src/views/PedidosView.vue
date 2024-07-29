@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <h1>Gerenciar Pedidos:</h1>
-    <DashBoard :url="url" :porta="porta"/>
+    <DashBoard :url="url" :porta="porta" @desautorizaUsuario="desautorizaUsuario" />
   </div>
 </template>
 
@@ -13,8 +13,16 @@
       url: String,
       porta: Number
     },
+    emits: [
+      "desautorizaUsuario"
+    ],
     components: {
       DashBoard
+    },
+    methods: {
+      desautorizaUsuario() {
+        this.$emit("desautorizaUsuario");
+      }
     }
   }
 </script>

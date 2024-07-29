@@ -47,6 +47,9 @@
         mixins: [
             fetchMixin
         ],
+        emits: [
+            "desautorizaUsuario"
+        ],
         computed: {
             Url() {
                 return(this.url + ':' + this.porta);
@@ -72,11 +75,9 @@
                     this.pegarOpcionais(),
                     this.pegarStastus()
                 ]).then(() => {
-                    if(this.listaPedidos.Erro || this.ingredientes.Erro || this.status.Erro) {
-                        this.$emit("desautorizaUsuario");
-                    } else {
-                        this.recuperaNomeIngredientes();
-                    }
+                    this.recuperaNomeIngredientes();
+                }).catch(erro => {
+                    this.$emit("desautorizaUsuario");
                 });
             },
             async pegarPedidos() {

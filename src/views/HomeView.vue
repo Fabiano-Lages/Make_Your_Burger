@@ -15,6 +15,9 @@
         url: String,
         porta: Number
     },
+    emits: [
+      "desautorizaUsuario"
+    ],
     components: {
       MainBanner,
       BurgerForm

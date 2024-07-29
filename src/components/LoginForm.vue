@@ -22,11 +22,15 @@
     import fetchMixin from '../mixins/fetchMixin';
 
     export default {
+        name: "LoginForm",
         props: {
             ativo: Boolean,
             url: String,
             porta: Number
         },
+        emits: [
+            "fechaForm", "autentica"
+        ],
         mixins: [
             fetchMixin
         ],

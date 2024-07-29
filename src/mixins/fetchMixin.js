@@ -10,14 +10,9 @@ export default {
       
         options.headers = headers;
       
-        let retorno = null;
-        try {
-          const response = await fetch(url, options);
-          retorno = await response.json();
-        } catch(erro) {
-          retorno = {Erro: erro};
-        }
-        
+        const response = await fetch(url, options);
+        const retorno = await response.json();
+
         return (retorno);
       },
       async fetchNoToken(url, options = {}) {
@@ -25,13 +20,8 @@ export default {
         const headers = options.headers || {};
         options.headers = headers;
       
-        let retorno = null;
-        try {
-          const response = await fetch(url, options);
-          retorno = await response.json();
-        } catch(erro) {
-          retorno = {Erro: erro};
-        }
+        const response = await fetch(url, options);
+        const retorno = await response.json();
         return (retorno);
       }
     }
