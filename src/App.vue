@@ -1,5 +1,5 @@
 <template>
-  <NavBar :logo="logo_src" :alt="app_name" :isauth="autenticado" @abreForm="alteraForm" />
+  <NavBar :logo="logo_src" :alt="app_name" :isauth="autenticado" @abreForm="alteraForm" @desautorizaUsuario="desautorizaUsuario" />
   <router-view  @desautorizaUsuario="desautorizaUsuario" :url="url" :porta="porta" />
   <LoginForm v-if="!autenticado" :ativo="loginAtivo" @fechaForm="alteraForm" @autentica="autenticaUsuario" :url="url" :porta="porta" />
   <FooterPage />

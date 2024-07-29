@@ -26,7 +26,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requireAuth) && !sessionStorage.getItem('token')) {
+  if(to.meta.requireAuth && !sessionStorage.getItem('token')) {
     next("/");
   } else {
     next();

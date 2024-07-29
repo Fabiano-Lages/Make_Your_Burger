@@ -5,13 +5,15 @@
         </router-link>
         <router-link to="/">Home</router-link>
         <router-link v-if="isauth" to="/pedidos">Pedidos</router-link>
-        <a href="#" v-if="!isauth" title="" @click="$emit('abreForm')">Login</a>
+        <a href="#" v-if="!isauth" title="Entrar" @click="$emit('abreForm')"><i class="bi bi-box-arrow-in-right"></i></a>
+        <a href="#" v-if="isauth" title="Sair" @click="$emit('desautorizaUsuario')"><i class="bi bi-box-arrow-left"></i></a>
     </div>
 </template>
 <script>
     export default {
         name: 'NavBar',
-        props:["logo", "alt", "isauth"]
+        props:["logo", "alt", "isauth"],
+        emits: ['abreForm', 'desautorizaUsuario']
     }
 </script>
 <style scoped>
